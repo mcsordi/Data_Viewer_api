@@ -5,7 +5,7 @@ import { AnyObject, ObjectSchema, ValidationError } from 'yup';
 type TProperties = 'body' | 'header' | 'params' | 'query';
 
 type TAllSchemas = (
-  schemas: Record<TProperties, ObjectSchema<AnyObject>>,
+  schemas: Partial<Record<TProperties, ObjectSchema<AnyObject>>>,
 ) => RequestHandler;
 
 const validation: TAllSchemas = (schemas) => (req, res, next) => {
