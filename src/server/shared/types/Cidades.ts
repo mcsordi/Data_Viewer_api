@@ -1,5 +1,5 @@
 export type TCidades = {
-  id: number
-  nome: string
-  estado: string
-}
+  id: number;
+  nome: string;
+  estado: string;
+};

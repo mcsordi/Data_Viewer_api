@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Knex } from 'knex'
-import * as path from 'path'
+import { Knex } from 'knex';
+import * as path from 'path';
 
-const development: Knex.Config = {
-  client: 'sqlite',
+export const development: Knex.Config = {
+  client: 'sqlite3',
+  useNullAsDefault: true,
   connection: {
     filename: path.resolve('..', '..', '..', '..', './viewer.db'),
   },
   pool: {
     afterCreate: (connection: any, done: () => void) => {
-      connection.run('PRAGMA foreign_keys = ON')
-      done()
+      connection.run('PRAGMA foreign_keys = ON');
+      done();
     },
   },
   migrations: {
@@ -19,19 +20,13 @@ const development: Knex.Config = {
   seeds: {
     directory: path.resolve('seeds'),
   },
-}
-const test: Knex.Config = {
+};
+export const test: Knex.Config = {
   ...development,
   connection: {
     filename: ':memory:',
   },
-}
-const production: Knex.Config = {
+};
+export const production: Knex.Config = {
   ...development,
-}
-
-export const environment = {
-  development,
-  test,
-  production,
-}
+};

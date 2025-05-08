@@ -1,6 +1,11 @@
-export const semi = false
-export const singleQuote = true
-export const trailingComma = 'all'
-export const tabWidth = 2
-export const useTabs = false
-export const printWidth = 80
+module.exports = {
+  semi: true,
+  trailingComma: 'all',
+  singleQuote: true,
+  printWidth: 120,
+  tabWidth: 2,
+  useTabs: false,
+  bracketSpacing: true,
+  arrowParens: 'always',
+  endOfLine: 'lf',
+};
