@@ -1,5 +1,5 @@
 import type { Knex } from 'knex';
-import { ENameTable } from '../../model/ENameTable';
+import { ENameTable } from '../model/ENameTable';
 
 export async function up(knex: Knex): Promise<void> {
   return await knex.schema

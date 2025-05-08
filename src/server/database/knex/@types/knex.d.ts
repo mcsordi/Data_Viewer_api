@@ -1,8 +1,8 @@
-import { TCidades } from '../../shared/types';
+import { TCidade } from '../../../shared/types/Cidades';
 
 declare module 'knex/types/tables' {
   interface Tables {
-    cidades: TCidades;
+    cidades: TCidade;
     //   pessoas: TPessoas
     //   usuarios: TUsuarios
   }

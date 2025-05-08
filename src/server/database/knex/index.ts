@@ -1,5 +1,7 @@
 import { knex } from 'knex';
 import { development, production, test } from '../knex/Environment';
+import 'dotenv/config';
+
 const selectEnv = () => {
   switch (process.env.NODE_ENV) {
     case 'production':
@@ -12,4 +14,4 @@ const selectEnv = () => {
   }
 };
 
-export const knexServer = knex(selectEnv());
+export const Knex = knex(selectEnv());

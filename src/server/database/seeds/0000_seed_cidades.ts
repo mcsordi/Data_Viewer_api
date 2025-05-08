@@ -1,5 +1,5 @@
 import { Knex } from 'knex';
-import { ENameTable } from '../../model/ENameTable';
+import { ENameTable } from '../model/ENameTable';
 
 export async function seed(knex: Knex): Promise<void> {
   const formatCities = asMuchAsPossibleSpCities.map((city) => ({

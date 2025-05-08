@@ -1,4 +1,4 @@
-export type TCidades = {
+export type TCidade = {
   id: number;
   nome: string;
   estado: string;
