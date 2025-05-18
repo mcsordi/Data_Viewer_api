@@ -2,12 +2,11 @@ import { EnameTable } from '../../../shared/types/EnameTable';
 import { TCidade } from '../../../shared/types/TCidade';
 import { Knex } from '../../knex';
 
-const create = async (body: TCidade): Promise<TCidade | Error> => {
+const create = async (body: TCidade): Promise<TCidade[] | Error> => {
     try {
         const createProvider = await Knex(EnameTable.cidade)
             .insert(body)
-            .returning('*')
-            .first();
+            .returning('*');
         if (typeof createProvider != 'object') {
             return new Error('Erro ao criar registro');
         }
