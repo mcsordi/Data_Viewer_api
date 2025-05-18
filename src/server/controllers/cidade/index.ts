@@ -1,2 +1,4 @@
 import * as create from './Create';
-export const cidadeController = { ...create };
+import * as getAll from './GetAll';
+
+export const cidadeController = { ...create, ...getAll };

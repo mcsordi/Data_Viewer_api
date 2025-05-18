@@ -1,2 +1,5 @@
 import { create } from './Create';
-export const cidadeProvider = { create };
+import { getAll } from './GetAll';
+import { count } from './Count';
+
+export const cidadeProvider = { create, getAll, count };
