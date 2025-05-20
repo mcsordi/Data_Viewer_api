@@ -9,7 +9,6 @@ const getAll = async (
 ): Promise<TCidade[] | Error> => {
     try {
         const getAll = await Knex(EnameTable.cidade)
-            .select('*')
             .where('nome', 'like', `%${filter}%`)
             .offset((page - 1) * limit)
             .limit(limit)

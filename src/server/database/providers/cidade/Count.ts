@@ -4,7 +4,6 @@ import { Knex } from '../../knex';
 const count = async (filter: string): Promise<number | Error> => {
     try {
         const [{ count }] = await Knex(EnameTable.cidade)
-            .select('*')
             .where('nome', 'like', `%${filter}%`)
             .count<[{ count: number }]>('* as count');
         if (Number.isInteger(count)) {

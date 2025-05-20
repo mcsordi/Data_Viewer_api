@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 import { TCidade } from '../../../shared/types/TCidade';
-const bodyValidation: yup.Schema<TCidade> = yup.object().shape({
+const bodyValidation: yup.ObjectSchema<TCidade> = yup.object().shape({
     id: yup.number().optional().typeError('Id deve ser do tipo número'),
     nome: yup
         .string()
