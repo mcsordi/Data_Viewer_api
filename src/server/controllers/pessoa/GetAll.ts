@@ -4,7 +4,7 @@ import { validation } from '../../shared/middleware/Validation';
 import { TQuery } from '../../shared/types/TQuery';
 import { StatusCodes } from 'http-status-codes';
 import { pessoaProvider } from '../../database/providers/pessoa';
-import { pessoaValidation } from '../model';
+import { pessoaValidation } from '../../shared/model';
 
 const getAllValidation = validation({
     query: pessoaValidation.queryValidation,

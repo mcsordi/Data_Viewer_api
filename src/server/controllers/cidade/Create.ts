@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 import { Request, Response } from 'express';
 import { validation } from '../../shared/middleware/Validation';
-import { cidadeValidation } from '../model';
+import { cidadeValidation } from '../../shared/model';
 import { TCidade } from '../../shared/types/TCidade';
 import { cidadeProvider } from '../../database/providers/cidade';
 import { StatusCodes } from 'http-status-codes';

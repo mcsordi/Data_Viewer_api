@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 import { Request, Response } from 'express';
 import { validation } from '../../shared/middleware/Validation';
-import { cidadeValidation } from '../model';
 import { TQuery } from '../../shared/types/TQuery';
 import { cidadeProvider } from '../../database/providers/cidade';
 import { StatusCodes } from 'http-status-codes';
+import { cidadeValidation } from '../../shared/model';
 
 const getAllValidation = validation({
     query: cidadeValidation.queryValidation,

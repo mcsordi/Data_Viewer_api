@@ -4,8 +4,8 @@ import { TUsuario } from '../../shared/types/TUsuario';
 import { usuarioProvider } from '../../database/providers/usuario';
 import { StatusCodes } from 'http-status-codes';
 import { validation } from '../../shared/middleware/Validation';
-import { UBodyValidation } from '../model/yup/UBodyValidation';
 import { encrypt } from '../../shared/services/EncryptPass';
+import { UBodyValidation } from '../../shared/model/yup/UBodyValidation';
 
 const signUpValidation = validation({ body: UBodyValidation });
 

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 import { Request, Response } from 'express';
 import { validation } from '../../shared/middleware/Validation';
-import { pessoaValidation } from '../model';
+import { pessoaValidation } from '../../shared/model';
 import { StatusCodes } from 'http-status-codes';
 import { pessoaProvider } from '../../database/providers/pessoa';
 import { TPessoa } from '../../shared/types/TPessoa';

@@ -1,15 +1,16 @@
 import { Request, Response } from 'express';
-import { validation } from '../../shared/middleware/Validation';
-import { pessoaValidation } from '../../shared/model';
 import { TIdParam } from '../../shared/types/TIdParam';
 import { StatusCodes } from 'http-status-codes';
-import { EnameTable } from '../../shared/types/EnameTable';
-import { pessoaProvider } from '../../database/providers/pessoa';
+import { usuarioProvider } from '../../database/providers/usuario';
 import { counter } from '../../shared/model/Counter';
+import { EnameTable } from '../../shared/types/EnameTable';
+import { validation } from '../../shared/middleware/Validation';
+import { IdValidation } from '../../shared/model/yup/IdValidation';
 
 const deleteValidation = validation({
-    params: pessoaValidation.IdValidation,
+    params: IdValidation,
 });
+
 const deleteById = async (req: Request<TIdParam>, res: Response) => {
     const { id } = req.params;
     if (!id) {
@@ -17,8 +18,7 @@ const deleteById = async (req: Request<TIdParam>, res: Response) => {
             .status(StatusCodes.BAD_REQUEST)
             .json({ errors: { default: 'Parametro id deve ser informado' } });
     }
-    const count = await counter(id, EnameTable.pessoa, 'deletar');
-
+    const count = await counter(id, EnameTable.usuario, 'deletar');
     if (count == 'id não encontrado') {
         return res
             .status(StatusCodes.BAD_REQUEST)
@@ -28,13 +28,12 @@ const deleteById = async (req: Request<TIdParam>, res: Response) => {
             .status(StatusCodes.INTERNAL_SERVER_ERROR)
             .json({ errors: { default: 'erro ao deletar registro' } });
     }
-    const deleteById = await pessoaProvider.deleteByID(id);
-
-    if (deleteById instanceof Error) {
+    const deleteId = await usuarioProvider.deleteById(id);
+    if (deleteId instanceof Error) {
         return res
             .status(StatusCodes.INTERNAL_SERVER_ERROR)
-            .json({ errors: { default: deleteById.message } });
+            .json({ errors: { default: deleteId.message } });
     }
-    return res.status(StatusCodes.OK).json(deleteById);
+    return res.status(StatusCodes.OK).json(deleteId);
 };
 export { deleteValidation, deleteById };

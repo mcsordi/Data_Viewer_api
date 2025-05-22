@@ -2,10 +2,10 @@ import { Request, Response } from 'express';
 import { validation } from '../../shared/middleware/Validation';
 import { TIdParam } from '../../shared/types/TIdParam';
 import { StatusCodes } from 'http-status-codes';
-import { Knex } from '../../database/knex';
 import { EnameTable } from '../../shared/types/EnameTable';
 import { pessoaProvider } from '../../database/providers/pessoa';
-import { pessoaValidation } from '../model';
+import { pessoaValidation } from '../../shared/model';
+import { counter } from '../../shared/model/Counter';
 
 const getByIdValidation = validation({
     params: pessoaValidation.IdValidation,
@@ -17,16 +17,20 @@ const getById = async (req: Request<TIdParam>, res: Response) => {
             .status(StatusCodes.BAD_REQUEST)
             .json({ errors: { default: 'Parametro id è obrigatório' } });
     }
-    const getById = await pessoaProvider.getById(id);
-    const [{ count }] = await Knex(EnameTable.pessoa)
-        .where('id', '=', `${id}`)
-        .count<[{ count: number }]>('* as count');
+    const count = await counter(id, EnameTable.pessoa, 'consultar');
 
-    if (!Number.isInteger(count) || count < 1) {
+    if (count == 'id não encontrado') {
         return res
             .status(StatusCodes.BAD_REQUEST)
-            .json({ errors: { default: 'Id não encontrado' } });
+            .json({ errors: { default: 'id não encontrado' } });
+    } else if (count == 'erro ao consultar registro') {
+        return res
+            .status(StatusCodes.INTERNAL_SERVER_ERROR)
+            .json({ errors: { default: 'erro ao consultar registro' } });
     }
+
+    const getById = await pessoaProvider.getById(id);
+
     if (getById instanceof Error) {
         return res
             .status(StatusCodes.INTERNAL_SERVER_ERROR)

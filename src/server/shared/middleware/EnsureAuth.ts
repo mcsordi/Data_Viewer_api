@@ -25,8 +25,10 @@ const ensureAuth: RequestHandler = (req, res, next) => {
             .status(StatusCodes.INTERNAL_SERVER_ERROR)
             .json({ errors: { authentication: 'token não encontrado' } });
     }
+    req.headers.userId = verifyToken.uid.toString();
+    req.headers.userEmail = verifyToken.email;
 
-    next();
+    return next();
 };
 
 export { ensureAuth };

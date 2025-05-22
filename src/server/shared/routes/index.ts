@@ -82,5 +82,17 @@ router.post(
     usuarioController.signInValidation,
     usuarioController.signIn
 );
+router.put(
+    '/usuario/:id',
+    ensureAuth,
+    usuarioController.updateValidation,
+    usuarioController.update
+);
+router.delete(
+    '/usuario/:id',
+    ensureAuth,
+    usuarioController.deleteValidation,
+    usuarioController.deleteById
+);
 
 export { router };
