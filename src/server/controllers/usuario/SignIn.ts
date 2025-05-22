@@ -8,6 +8,7 @@ import * as yup from 'yup';
 import { decrypt } from '../../shared/services/EncryptPass';
 import { Knex } from '../../database/knex';
 import { EnameTable } from '../../shared/types/EnameTable';
+import { generate } from '../../shared/services/JwtToken';
 
 const signInYupValidation: yup.ObjectSchema<Omit<TUsuario, 'id' | 'nome'>> = yup
     .object()
@@ -32,18 +33,18 @@ const signInValidation = validation({
 
 const signIn = async (req: Request<{}, {}, TUsuario>, res: Response) => {
     const body = req.body;
-    const password = await Knex(EnameTable.usuario).where(
-        'email',
-        '=',
-        body.email
-    );
-    const comparePass = await decrypt(body.senha, password[0].senha);
+    const usuario = await Knex(EnameTable.usuario)
+        .where('email', '=', body.email)
+        .first('*');
+    const comparePass = await decrypt(body.senha, usuario.senha);
+
     const signIn = await usuarioProvider.signIn(body);
-    if (signIn == 'Erro ao realizar login do usuário') {
+
+    if (signIn == 'ERRO AO REALIZAR LOGIN DO USUÁRIO') {
         return res
             .status(StatusCodes.INTERNAL_SERVER_ERROR)
             .json({ errors: { default: 'Erro ao realizar login do usuário' } });
-    } else if (signIn == 'Usuário ou senha são invalidos') {
+    } else if (signIn == 'USUÁRIO OU SENHA SÃO INVALIDOS') {
         return res
             .status(StatusCodes.BAD_REQUEST)
             .json({ errors: { default: 'Usuário ou senha são invalidos' } });
@@ -53,8 +54,11 @@ const signIn = async (req: Request<{}, {}, TUsuario>, res: Response) => {
             .status(StatusCodes.BAD_REQUEST)
             .json({ errors: { default: 'Usuário ou senha são invalidos' } });
     }
-    return res
-        .status(StatusCodes.OK)
-        .json({ acessToken: 'aaaa.bbbb.cccc.dddd' });
+
+    const jwt = generate({
+        uid: usuario.id as number,
+        email: usuario.email,
+    });
+    return res.status(StatusCodes.OK).json({ acessToken: jwt });
 };
 export { signInValidation, signIn };

@@ -7,31 +7,29 @@ const signIn = async (
     body: TUsuario
 ): Promise<
     | void
-    | 'Usuário ou senha são invalidos'
-    | 'Erro ao realizar login do usuário'
+    | 'USUÁRIO OU SENHA SÃO INVALIDOS'
+    | 'ERRO AO REALIZAR LOGIN DO USUÁRIO'
 > => {
     try {
         const { email, senha } = body;
-        const password = await Knex(EnameTable.usuario).where(
-            'email',
-            '=',
-            email
-        );
-        const comparePass = await decrypt(senha, password[0].senha);
+        const password = await Knex(EnameTable.usuario)
+            .where('email', '=', email)
+            .first('*');
+        const comparePass = await decrypt(senha, password.senha);
 
         const [{ count }] = await Knex(EnameTable.usuario)
             .where({
                 email: email,
-                senha: comparePass ? password[0].senha : '',
+                senha: comparePass ? password.senha : '',
             })
             .count<[{ count: number }]>('* as count');
 
         if (!Number.isInteger(count) || count < 1) {
-            return 'Usuário ou senha são invalidos';
+            return 'USUÁRIO OU SENHA SÃO INVALIDOS';
         }
     } catch (error) {
         console.log(error);
-        return 'Erro ao realizar login do usuário';
+        return 'ERRO AO REALIZAR LOGIN DO USUÁRIO';
     }
 };
 export { signIn };
