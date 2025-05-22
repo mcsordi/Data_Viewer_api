@@ -16,13 +16,9 @@ export async function up(knex: Knex): Promise<void> {
                 .index()
                 .unique()
                 .notNullable();
-            table
-                .string('senha')
-                .checkLength('>=', 6)
-                .checkLength('<=', 30)
-                .notNullable();
+            table.string('senha').notNullable();
         })
-        .then(() => console.log(`Created Table ${EnameTable.cidade}`));
+        .then(() => console.log(`Created Table ${EnameTable.usuario}`));
 }
 
 export async function down(knex: Knex): Promise<void> {
