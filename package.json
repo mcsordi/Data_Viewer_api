@@ -4,7 +4,7 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "tsc",
+        "build": "npm install && tsc",
         "production": "node ./build/Server.js",
         "start": "npx tsx ./src/Server.ts",
         "migrate": "npx knex --knexfile ./src/server/database/knex/Environment.ts migrate:latest",
