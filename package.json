@@ -13,6 +13,7 @@
     "license": "ISC",
     "description": "",
     "dependencies": {
+        "@types/http-status-codes": "^1.2.0",
         "bcryptjs": "^3.0.2",
         "eslint-config-prettier": "^10.1.5",
         "eslint-plugin-prettier": "^5.4.0",
