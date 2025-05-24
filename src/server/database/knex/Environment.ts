@@ -29,5 +29,19 @@ export const test: Knex.Config = {
 };
 
 export const production: Knex.Config = {
-    ...development,
+    client: 'pg',
+    connection: {
+        database: process.env.PG_DATABASE,
+        password: process.env.PG_PASSWORD,
+        user: process.env.PG_USER,
+        host: process.env.PG_HOST,
+        port: Number(process.env.PG_PORT) || 5432,
+        ssl: { rejectUnauthorized: false },
+    },
+    migrations: {
+        directory: path.resolve(__dirname, '..', 'migrations'),
+    },
+    seeds: {
+        directory: path.resolve(__dirname, '..', 'seeds'),
+    },
 };
